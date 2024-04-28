@@ -1,32 +1,32 @@
 function [ F,G,C_K,per ] = GDJ_GCP( m,q )
-% GDJĞòÁĞ¶Ô£¬2020Äê7ÔÂ3ÈÕ20:26:12
-% G,HÎªÊä³öµÄGCP£¬int8ÀàĞÍÊı¾İ£¬¶¨ÒåÔÚZqÉÏ
-S = all_sequence(m,2);   % ´æ´¢0 - 2^m-1 ËùÓĞÊı×ÖµÄ¶ş½øÖÆ±íÊ¾
-CK = all_sequence(m,q);  % ËùÓĞ¿ÉÒÔÈ¡µ½µÄc_k
+% GDJåºåˆ—å¯¹
+% G,Hä¸ºè¾“å‡ºçš„GCPï¼Œint8ç±»å‹æ•°æ®ï¼Œå®šä¹‰åœ¨Zqä¸Š
+S = all_sequence(m,2);   % å­˜å‚¨0 - 2^m-1 æ‰€æœ‰æ•°å­—çš„äºŒè¿›åˆ¶è¡¨ç¤º
+CK = all_sequence(m,q);  % æ‰€æœ‰å¯ä»¥å–åˆ°çš„c_k
 
-P = perms(m:-1:1);    % ÖªµÀËùÓĞµÄÖÃ»»
+P = perms(m:-1:1);    % çŸ¥é“æ‰€æœ‰çš„ç½®æ¢
 
-% ¶ÔÖÃ»»×öÏŞÖÆÌõ¼ş
+% å¯¹ç½®æ¢åšé™åˆ¶æ¡ä»¶
 new_ps = [];
 for i = 1:size(P,1)
     p = P(i,:);
-    if p(1) == m-1 && p(m) == m   %ÏŞÖÆÌõ¼şÔÚ´Ë´¦Ôö¼Ó
+    if p(1) == m-1 && p(m) == m   %é™åˆ¶æ¡ä»¶åœ¨æ­¤å¤„å¢åŠ 
         new_ps = [new_ps;p];
     end
 end
 
 np = size(new_ps,1);
 nck = size(CK,1);
-% ¿ªÊ¼ÅÜ
+% å¼€å§‹è·‘
 t = 1;
 for ii = 1:np
      p = new_ps(ii,:);
      Sp = S(:,p);
-     A = sum(Sp(:,1:m-1).*Sp(:,2:m),2);  % ¶ş´ÎÏîÇóºÍ
+     A = sum(Sp(:,1:m-1).*Sp(:,2:m),2);  % äºŒæ¬¡é¡¹æ±‚å’Œ
      A = int8(A);
     for jj = 1:nck
         ck = CK(jj,:);
-        B = double(S)*double(ck.'); % Ò»´ÎÏîÇóºÍ
+        B = double(S)*double(ck.'); % ä¸€æ¬¡é¡¹æ±‚å’Œ
         B = int8(B);
         for c1 = 0:0
             f = mod(int8(q/2)*A+B+1,q);
